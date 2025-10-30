@@ -105,3 +105,51 @@ def change_password(request):
     user.updated_at = timezone.now()
     user.save()
     return Response({"message": "Password updated successfully."})
+
+
+#CONTACTS
+@api_view(['POST'])
+def add_contact(request):
+    #TODO
+    pass
+
+@api_view(['POST'])
+def delete_contact(request):
+    #TODO
+    pass
+
+@api_view(['GET'])
+def get_contacts_list(request):
+    #TODO
+    pass
+
+#CHAT
+@api_view(['POST'])
+def create_chat(request):
+    #TODO
+    pass
+
+@api_view(['POST'])
+def delete_chat(request):
+    #TODO
+    pass
+
+@api_view(['POST'])
+def add_chat_participant(request):
+    #TODO
+    pass
+
+@api_view(['POST'])
+def remove_chat_participant(request):
+    #TODO
+    pass
+
+#MESSAGES
+
+@api_view(['POST'])
+def send_message(request):
+    #TODO
+    pass
+
+
+
