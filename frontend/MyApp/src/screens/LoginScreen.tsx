@@ -12,7 +12,10 @@ const LoginScreen = ({ navigation }: any) => {
 
             setTimeout(() => {
                 setLoading(false);
-                navigation.replace('Home');
+                navigation.reset({
+                index: 0,
+                routes: [{ name: 'Home' }],
+                });
             }, 1000);
         } else {
             Alert.alert('Error', 'Enter e-mail and password');
