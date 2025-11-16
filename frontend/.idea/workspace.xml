@@ -5,7 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6f1d5a84-e977-4849-9e10-04a9ad6516cd" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/MyApp/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/MyApp/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MyApp/src/screens/LoginScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/MyApp/src/screens/LoginScreen.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,7 +71,7 @@
       <workItem from="1762198571817" duration="583000" />
       <workItem from="1762199171503" duration="7737000" />
       <workItem from="1762207200597" duration="1035000" />
-      <workItem from="1763263160836" duration="355000" />
+      <workItem from="1763263160836" duration="773000" />
     </task>
     <servers />
   </component>

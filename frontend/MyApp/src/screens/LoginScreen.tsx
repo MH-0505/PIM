@@ -21,7 +21,7 @@ const LoginScreen = ({ navigation }: any) => {
             Alert.alert('Error', 'Enter e-mail and password');
         }
     };
-
+//x
     return (
         <View style={styles.container}>
             {/* Header */}
