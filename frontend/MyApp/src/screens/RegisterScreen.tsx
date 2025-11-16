@@ -1,50 +1,68 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 
+const API_URL = "http://192.168.0.32:8000/api";
+
 const RegisterScreen = ({ navigation }: any) => {
-    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [loading, setLoading] = useState(false);
 
-    const handleRegister = () => {
-        if (username && password && confirmPassword) {
-            if (password !== confirmPassword) {
-                Alert.alert('Błąd', 'Hasło i potwierdzenie hasła muszą być takie same');
-                return;
-            }
-            setLoading(true);
-
-            setTimeout(() => {
-                setLoading(false);
-                navigation.reset({
-                index: 0,
-                routes: [{ name: 'Home' }],
-                });
-            }, 1000);
-        } else {
-            Alert.alert('Błąd', 'Wpisz nazwę użytkownika, hasło oraz potwierdź hasło');
+    const handleRegister = async () => {
+        if (!email || !password || !confirmPassword) {
+            return Alert.alert("Błąd", "Wszystkie pola są wymagane.");
         }
+
+        if (password !== confirmPassword) {
+            return Alert.alert("Błąd", "Hasła muszą być takie same.");
+        }
+
+        setLoading(true);
+
+        try {
+            const response = await fetch(`${API_URL}/users/create/`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    email: email,
+                    password: password
+                })
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                setLoading(false);
+                return Alert.alert("Błąd", JSON.stringify(data));
+            }
+
+            Alert.alert("Sukces", "Rejestracja zakończona!");
+            navigation.navigate("Login");
+
+        } catch (error) {
+            Alert.alert("Błąd", "Nie udało się połączyć z serwerem.");
+        }
+
+        setLoading(false);
     };
 
     return (
         <View style={styles.container}>
-            {/* Header */}
             <View style={styles.header}>
                 <Text style={styles.title}>Zarejestruj się</Text>
-
             </View>
 
-            {/* Form */}
             <View style={styles.formContainer}>
                 <View style={styles.inputWrapper}>
-                    <Text style={styles.label}>Nazwa użytkownika</Text>
+                    <Text style={styles.label}>Email</Text>
                     <TextInput
-                        placeholder="Username"
+                        placeholder="Email"
                         style={styles.input}
-                        value={username}
-                        onChangeText={setUsername}
+                        value={email}
+                        onChangeText={setEmail}
                         placeholderTextColor="#999"
+                        autoCapitalize="none"
                     />
                 </View>
 
@@ -63,7 +81,7 @@ const RegisterScreen = ({ navigation }: any) => {
                 <View style={styles.inputWrapper}>
                     <Text style={styles.label}>Potwierdź hasło</Text>
                     <TextInput
-                        placeholder="Password"
+                        placeholder="Confirm Password"
                         style={styles.input}
                         value={confirmPassword}
                         onChangeText={setConfirmPassword}
@@ -78,14 +96,12 @@ const RegisterScreen = ({ navigation }: any) => {
                     disabled={loading}
                 >
                     <Text style={styles.buttonText}>
-                        {loading ? 'Rejestrowanie...' : 'Zarejestruj'}
+                        {loading ? "Rejestrowanie..." : "Zarejestruj"}
                     </Text>
                 </TouchableOpacity>
             </View>
 
-            {/* Footer */}
             <View style={styles.footer}>
-
                 <TouchableOpacity onPress={() => navigation.navigate('Login')}>
                     <Text style={styles.footerLink}>Powróć do logowania</Text>
                 </TouchableOpacity>
@@ -99,29 +115,20 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#f5f7fa',
         paddingHorizontal: 20,
-        justifyContent: 'space-between',
         paddingVertical: 40,
     },
     header: {
-        marginTop: 30,
-        marginBottom: 40,
+        marginTop: 20,
+        marginBottom: 20,
     },
     title: {
         fontSize: 32,
         fontWeight: '700',
         color: '#1a1a1a',
-        marginBottom: 8,
         textAlign: 'center',
-
-    },
-    subtitle: {
-        fontSize: 16,
-        color: '#666',
-        fontWeight: '400',
     },
     formContainer: {
-        flex: 1,
-        justifyContent: 'center',
+        marginBottom: 40,
     },
     inputWrapper: {
         marginBottom: 24,
@@ -156,7 +163,6 @@ const styles = StyleSheet.create({
     },
     buttonDisabled: {
         backgroundColor: '#b3d9ff',
-        shadowOpacity: 0.1,
     },
     buttonText: {
         color: '#fff',
@@ -164,17 +170,8 @@ const styles = StyleSheet.create({
         fontWeight: '700',
     },
     footer: {
-        position: 'absolute',
-        bottom: 0,
-        left: 0,
-        right: 0,
-        padding: 40,
         justifyContent: 'center',
         alignItems: 'center',
-    },
-    footerText: {
-        color: '#666',
-        fontSize: 14,
     },
     footerLink: {
         color: '#007AFF',

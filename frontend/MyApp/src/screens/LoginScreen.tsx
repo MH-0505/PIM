@@ -1,36 +1,65 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+
+const API_URL = "http://192.168.0.32:8000/api";
 
 const LoginScreen = ({ navigation }: any) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
 
-    const handleLogin = () => {
-        if (username && password) {
-            setLoading(true);
 
-            setTimeout(() => {
-                setLoading(false);
-                navigation.reset({
-                index: 0,
-                routes: [{ name: 'Home' }],
-                });
-            }, 1000);
-        } else {
-            Alert.alert('Error', 'Enter e-mail and password');
+
+
+    const handleLogin = async () => {
+        if (!username || !password) {
+            return Alert.alert("Error", "Enter email and password");
         }
+
+        setLoading(true);
+
+        try {
+            const response = await fetch(`${API_URL}/users/authenticate/`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    email: username,
+                    password: password
+                })
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                setLoading(false);
+                return Alert.alert("Login failed", data.error || "Unknown error");
+            }
+
+
+            await AsyncStorage.setItem("token", data.token);
+
+            navigation.reset({
+                index: 0,
+                routes: [{ name: "Home" }],
+            });
+
+        } catch (error) {
+            Alert.alert("Error", "Cannot connect to backend");
+        }
+
+        setLoading(false);
     };
-//x
     return (
         <View style={styles.container}>
-            {/* Header */}
+
             <View style={styles.header}>
                 <Text style={styles.title}>Log in</Text>
 
             </View>
 
-            {/* Form */}
+
             <View style={styles.formContainer}>
                 <View style={styles.inputWrapper}>
                     <Text style={styles.label}>Login</Text>
@@ -66,7 +95,7 @@ const LoginScreen = ({ navigation }: any) => {
                 </TouchableOpacity>
             </View>
 
-            {/* Footer */}
+
             <View style={styles.footer}>
 
                 <TouchableOpacity onPress={() => navigation.navigate('Register')}>
@@ -87,7 +116,7 @@ const styles = StyleSheet.create({
     },
     header: {
         marginTop: 30,
-        marginBottom: 40,
+        marginBottom: 20,
     },
     title: {
         fontSize: 32,
@@ -103,8 +132,7 @@ const styles = StyleSheet.create({
         fontWeight: '400',
     },
     formContainer: {
-        flex: 1,
-        justifyContent: 'center',
+        marginBottom: 40,
     },
     inputWrapper: {
         marginBottom: 24,

@@ -13,4 +13,8 @@ urlpatterns = [
     path('users/change_email/', views.change_email),
     path('users/change_password/', views.change_password),
 
+    path('contacts/add/', views.add_contact),
+    path('contacts/list/', views.get_contacts_list),
+
+
 ]
