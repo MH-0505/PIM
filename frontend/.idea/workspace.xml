@@ -5,18 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6f1d5a84-e977-4849-9e10-04a9ad6516cd" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/MyApp/api.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MyApp/src/components/AddContactForm.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MyApp/src/screens/ChatScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/api/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/api/serializers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/api/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/api/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../backend/api/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/api/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../backend/backend/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/backend/settings.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MyApp/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/MyApp/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MyApp/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/MyApp/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MyApp/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/MyApp/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MyApp/src/components/NavBar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/MyApp/src/components/NavBar.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MyApp/src/screens/HomeScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/MyApp/src/screens/HomeScreen.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MyApp/src/screens/LoginScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/MyApp/src/screens/LoginScreen.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MyApp/src/screens/RegisterScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/MyApp/src/screens/RegisterScreen.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,7 +79,7 @@
       <workItem from="1762198571817" duration="583000" />
       <workItem from="1762199171503" duration="7737000" />
       <workItem from="1762207200597" duration="1035000" />
-      <workItem from="1763263160836" duration="8246000" />
+      <workItem from="1763263160836" duration="15227000" />
     </task>
     <servers />
   </component>

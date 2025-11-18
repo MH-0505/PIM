@@ -6,9 +6,23 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from './src/screens/HomeScreen';
 import LoginScreen from './src/screens/LoginScreen';
 import RegisterScreen from './src/screens/RegisterScreen';
+import ChatScreen from './src/screens/ChatScreen';
+
+type RootStackParamList = {
+    Login: undefined;
+    Register: undefined;
+    Home: undefined;
+    ChatScreen: {
+        chatId: string;
+        otherUserEmail: string;
+        currentUserId: string;
+    };
+};
+
 
 enableScreens();
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<RootStackParamList>();
+
 
 export default function App() {
     return (
@@ -30,10 +44,17 @@ export default function App() {
                 <Stack.Screen
                     name="Home"
                     component={HomeScreen}
-                    options={{
-                        title: "Strona główna",
-                    }}
+                    options={{ title: "Strona główna" }}
                 />
+
+                <Stack.Screen
+                    name="ChatScreen"
+                    component={ChatScreen}
+                    options={({ route }) => ({
+                        title: route.params.otherUserEmail
+                    })}
+                />
+
 
             </Stack.Navigator>
         </NavigationContainer>
