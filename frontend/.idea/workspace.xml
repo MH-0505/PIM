@@ -5,14 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6f1d5a84-e977-4849-9e10-04a9ad6516cd" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/MyApp/src/screens/ChatScreen.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../backend/api/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/api/serializers.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MyApp/src/screens/GameScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/api/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/api/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../backend/api/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/api/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../backend/api/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/api/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MyApp/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/MyApp/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MyApp/src/screens/ChatScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/MyApp/src/screens/ChatScreen.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MyApp/src/screens/HomeScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/MyApp/src/screens/HomeScreen.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MyApp/src/screens/LoginScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/MyApp/src/screens/LoginScreen.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,23 +31,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;React Native.Android.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;Marcin&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_interpreter_path&quot;: &quot;node&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;C:\\Users\\marci\\Documents\\PIM\\PIM\\frontend\\MyApp\\node_modules\\prettier&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\marci\\Documents\\PIM\\PIM\\frontend\\MyApp\\node_modules\\typescript\\lib&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "React Native.Android.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_interpreter_path": "node",
+    "nodejs_package_manager_path": "npm",
+    "prettierjs.PrettierConfiguration.Package": "C:\\Users\\marci\\Documents\\PIM\\PIM\\frontend\\MyApp\\node_modules\\prettier",
+    "ts.external.directory.path": "C:\\Users\\marci\\Documents\\PIM\\PIM\\frontend\\MyApp\\node_modules\\typescript\\lib",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration name="Android" type="ReactNative" factoryName="React Native">
       <working-dir value="$PROJECT_DIR$" />
@@ -80,6 +80,7 @@
       <workItem from="1762199171503" duration="7737000" />
       <workItem from="1762207200597" duration="1035000" />
       <workItem from="1763263160836" duration="15227000" />
+      <workItem from="1763514891294" duration="2987000" />
     </task>
     <servers />
   </component>

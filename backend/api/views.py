@@ -346,31 +346,34 @@ def get_user_chats_detailed(request, user_id):
     except User.DoesNotExist:
         return Response({"error": "User does not exist"}, status=404)
 
-
     chat_list = Chat.objects.filter(participants__user_id=user)
 
     result = []
 
     for chat in chat_list:
-
         other_participant = (
             ChatParticipant.objects
             .filter(chat_id=chat)
             .exclude(user_id=user)
+            .select_related("user_id")
             .first()
         )
 
         if other_participant:
             other_user_email = other_participant.user_id.email
+            other_user_id = str(other_participant.user_id.id)
         else:
             other_user_email = "Unknown user"
+            other_user_id = None
 
         result.append({
             "chat_id": str(chat.id),
-            "other_user_email": other_user_email
+            "other_user_email": other_user_email,
+            "other_user_id": other_user_id,
         })
 
     return Response(result, status=200)
+
 
 
 @api_view(['POST'])
@@ -430,4 +433,203 @@ def send_message(request):
     return Response(serializer.data, status=201)
 
 
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework import status
+from .models import Game, User
 
+
+@api_view(['POST'])
+def create_game(request):
+    player_1_id = request.data.get("player_1_id")
+    player_2_id = request.data.get("player_2_id")
+
+    if not player_1_id or not player_2_id:
+        return Response({"error": "player_1_id and player_2_id are required"}, status=400)
+
+    try:
+        p1 = User.objects.get(id=player_1_id)
+        p2 = User.objects.get(id=player_2_id)
+    except User.DoesNotExist:
+        return Response({"error": "One of the players does not exist"}, status=404)
+
+
+    existing = (
+        Game.objects.filter(player_1_id=p1, player_2_id=p2).first() or
+        Game.objects.filter(player_1_id=p2, player_2_id=p1).first()
+    )
+
+    if existing:
+        return Response({
+            "message": "Game already exists",
+            "game_id": existing.id
+        }, status=200)
+
+
+    game = Game.objects.create(
+        player_1_id=p1,
+        player_2_id=p2,
+        player_1_symbol='X',
+        player_2_symbol='O',
+        current_turn=p1
+    )
+
+    return Response({
+        "game_id": game.id,
+        "player_1": p1.email,
+        "player_2": p2.email,
+    }, status=201)
+
+@api_view(['GET'])
+def get_game(request):
+    p1 = request.GET.get("player_1_id")
+    p2 = request.GET.get("player_2_id")
+
+    if not p1 or not p2:
+        return Response({"error": "player_1_id and player_2_id are required"}, status=400)
+
+
+    game = Game.objects.filter(player_1_id=p1, player_2_id=p2).first()
+    if not game:
+        game = Game.objects.filter(player_1_id=p2, player_2_id=p1).first()
+
+    if not game:
+        return Response({"error": "Game not found"}, status=404)
+
+    fields = {f"field_{i}": getattr(game, f"field_{i}") for i in range(1, 10)}
+
+    return Response({
+        "game_id": game.id,
+        "player_1": str(game.player_1_id.id),
+        "player_2": str(game.player_2_id.id),
+        "player_1_symbol": game.player_1_symbol,
+        "player_2_symbol": game.player_2_symbol,
+        "current_turn": str(game.current_turn.id),
+        "is_finished": game.is_finished,
+        "winner": str(game.winner.id) if game.winner else None,
+        "board": fields
+    })
+
+
+
+def check_winner(game):
+    board = [getattr(game, f"field_{i}") for i in range(1, 10)]
+
+    wins = [
+        (0,1,2), (3,4,5), (6,7,8),  # poziomo
+        (0,3,6), (1,4,7), (2,5,8),  # pionowo
+        (0,4,8), (2,4,6)            # na skos
+    ]
+
+    for a, b, c in wins:
+        if board[a] == board[b] == board[c] and board[a] != "EMPTY":
+            return board[a]
+
+    if "EMPTY" not in board:
+        return "DRAW"
+
+    return None
+
+
+
+@api_view(['POST'])
+def make_move(request):
+    game_id = request.data.get("game_id")
+    player_id = request.data.get("player_id")
+    field = request.data.get("field")
+
+    if not game_id or not player_id or not field:
+        return Response({"error": "game_id, player_id, and field are required"}, status=400)
+
+    try:
+        game = Game.objects.get(id=game_id)
+    except Game.DoesNotExist:
+        return Response({"error": "Game not found"}, status=404)
+
+    if game.is_finished:
+        return Response({"error": "Game is already finished"}, status=400)
+
+    if str(game.current_turn.id) != str(player_id):
+        return Response({"error": "Not your turn"}, status=403)
+
+
+    try:
+        field = int(field)
+        assert 1 <= field <= 9
+    except:
+        return Response({"error": "Field must be 1-9"}, status=400)
+
+    field_name = f"field_{field}"
+
+
+    if getattr(game, field_name) != "EMPTY":
+        return Response({"error": "Field already taken"}, status=400)
+
+
+    if str(game.player_1_id.id) == str(player_id):
+        symbol = game.player_1_symbol
+        next_turn = game.player_2_id
+    else:
+        symbol = game.player_2_symbol
+        next_turn = game.player_1_id
+
+
+    setattr(game, field_name, symbol)
+    game.save()
+
+
+    winner_symbol = check_winner(game)
+
+    if winner_symbol == "X" or winner_symbol == "O":
+        game.is_finished = True
+
+        game.winner = (
+            game.player_1_id if game.player_1_symbol == winner_symbol else game.player_2_id
+        )
+        game.save()
+
+        return Response({
+            "status": "WIN",
+            "winner": winner_symbol,
+            "winner_user_id": str(game.winner.id)
+        })
+
+    elif winner_symbol == "DRAW":
+        game.is_finished = True
+        game.winner = None
+        game.save()
+
+        return Response({"status": "DRAW"})
+
+
+    game.current_turn = next_turn
+    game.save()
+
+    return Response({
+        "status": "OK",
+        "next_turn": str(next_turn.id)
+    })
+
+@api_view(["POST"])
+def restart_game(request):
+    game_id = request.data.get("game_id")
+
+    if not game_id:
+        return Response({"error": "game_id is required"}, status=400)
+
+    try:
+        game = Game.objects.get(id=game_id)
+    except Game.DoesNotExist:
+        return Response({"error": "Game not found"}, status=404)
+
+
+    for i in range(1, 10):
+        setattr(game, f"field_{i}", "EMPTY")
+
+    game.is_finished = False
+    game.winner = None
+    game.current_turn = game.player_1_id   #X zawsze zaczyna
+
+    game.save()
+
+    return Response({"status": "RESTARTED"})

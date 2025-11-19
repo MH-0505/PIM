@@ -7,6 +7,7 @@ import HomeScreen from './src/screens/HomeScreen';
 import LoginScreen from './src/screens/LoginScreen';
 import RegisterScreen from './src/screens/RegisterScreen';
 import ChatScreen from './src/screens/ChatScreen';
+import GameScreen from './src/screens/GameScreen';
 
 type RootStackParamList = {
     Login: undefined;
@@ -16,6 +17,11 @@ type RootStackParamList = {
         chatId: string;
         otherUserEmail: string;
         currentUserId: string;
+        otherUserId: string;
+    };
+    GameScreen: {
+        player1Id: string;
+        player2Id: string;
     };
 };
 
@@ -53,6 +59,12 @@ export default function App() {
                     options={({ route }) => ({
                         title: route.params.otherUserEmail
                     })}
+                />
+
+                <Stack.Screen
+                    name="GameScreen"
+                    component={GameScreen}
+                    options={{ title: "Game" }}
                 />
 
 

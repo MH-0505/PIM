@@ -24,6 +24,7 @@ const ChatPanel = ({chats, navigation}: any) => (
             navigation.navigate('ChatScreen', {
               chatId: chat.chat_id,
               otherUserEmail: chat.other_user_email,
+              otherUserId: chat.other_user_id,
             })
           }>
           <Text style={styles.chatText}>{chat.other_user_email}</Text>
@@ -186,6 +187,7 @@ const HomeScreen = ({navigation}: any) => {
       navigation.navigate('ChatScreen', {
         chatId: data.chat_id,
         otherUserEmail: data.other_user_email,
+        otherUserId: contactUserId,
       });
 
       loadChats();

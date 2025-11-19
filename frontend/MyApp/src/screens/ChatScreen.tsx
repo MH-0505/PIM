@@ -10,6 +10,7 @@ import {
     Platform
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from "@react-navigation/native";
 
 const API_URL = "http://192.168.0.32:8000/api";
 
@@ -28,6 +29,7 @@ const ChatScreen = ({ route }: any) => {
     const [currentUserId, setCurrentUserId] = useState<string>("");
 
     const flatListRef = useRef<FlatList>(null);
+    const navigation = useNavigation();
 
 
     const scrollToBottom = () => {
@@ -41,6 +43,26 @@ const ChatScreen = ({ route }: any) => {
             if (uid) setCurrentUserId(uid);
         })();
     }, []);
+
+
+    useEffect(() => {
+        if (!currentUserId) return;
+
+        navigation.setOptions({
+            headerRight: () => (
+                <TouchableOpacity
+                    style={{ marginRight: 10 }}
+                    onPress={() => navigation.navigate("GameScreen" as never, {
+                        player1Id: currentUserId,
+                        player2Id: route.params.otherUserId
+                    } as never)}
+                >
+                    <Text style={{ color: "#007AFF", fontSize: 16 }}>Game</Text>
+                </TouchableOpacity>
+            )
+        });
+    }, [currentUserId, navigation, route.params.otherUserId]);
+
 
 
     const loadMessages = useCallback(async () => {

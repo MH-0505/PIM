@@ -13,18 +13,23 @@ urlpatterns = [
     path('users/change_email/', views.change_email),
     path('users/change_password/', views.change_password),
 
-
-    #CONTACTS
+    # CONTACTS
     path('contacts/add/', views.add_contact),
     path('contacts/list/', views.get_contacts_list),
 
-    #CHATS
+    # CHATS
     path('chats/create-one-on-one/', views.create_or_get_chat_between_users),
     path('chats/user-chats/<uuid:user_id>/', views.get_user_chats),
     path('chats/user-chats-detailed/<user_id>/', views.get_user_chats_detailed),
 
-    #MESSAGES
+    # MESSAGES
     path('messages/<uuid:chat_id>/', views.get_messages),
     path('messages/send/', views.send_message),
+
+    # GAMES
+    path('game/create', views.create_game),
+    path('game/', views.get_game),
+    path('game/move', views.make_move),
+    path('game/restart', views.restart_game),
 
 ]
