@@ -4,19 +4,19 @@ import NavBar from '../components/NavBar';
 
 const ChatPanel = () => (
     <View style={styles.container}>
-        <Text style={styles.title}>Chat Panel</Text>
+        <Text style={styles.title}>TODO: Chat Panel</Text>
     </View>
 );
 
 const ContactsPanel = () => (
     <View style={styles.container}>
-        <Text style={styles.title}>Contacts Panel</Text>
+        <Text style={styles.title}>TODO: Contacts Panel</Text>
     </View>
 );
 
 const ProfilePanel = () => (
     <View style={styles.container}>
-        <Text style={styles.title}>Profile Panel</Text>
+        <Text style={styles.title}>TODO: Profile Panel</Text>
     </View>
 );
 

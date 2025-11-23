@@ -8,16 +8,16 @@ const NavBar = ({ selectedPanel, setSelectedPanel }) => {
     return (
         <View style={styles.buttonBar}>
             <TouchableOpacity style={styles.buttonContainer} onPress={() => setSelectedPanel(panels[0])}>
-                <FontAwesome5 name="comments" size={24} color={selectedPanel === panels[0] ? "blue" : "grey"} />
-                <Text style={[styles.caption, { color: selectedPanel === panels[0] ? "blue" : "grey" }]}>Czaty</Text>
+                <FontAwesome5 name="comments" size={24} color={selectedPanel === panels[0] ? "#007AFF" : "grey"} />
+                <Text style={[styles.caption, { color: selectedPanel === panels[0] ? "#007AFF" : "grey" }]}>Czaty</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.buttonContainer} onPress={() => setSelectedPanel(panels[1])}>
-                <FontAwesome5 name="address-book" size={24} color={selectedPanel === panels[1] ? "blue" : "grey"} />
-                <Text style={[styles.caption, { color: selectedPanel === panels[1] ? "blue" : "grey" }]}>Kontakty</Text>
+                <FontAwesome5 name="address-book" size={24} color={selectedPanel === panels[1] ? "#007AFF" : "grey"} />
+                <Text style={[styles.caption, { color: selectedPanel === panels[1] ? "#007AFF" : "grey" }]}>Kontakty</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.buttonContainer} onPress={() => setSelectedPanel(panels[2])}>
-                <FontAwesome5 name="user" size={24} color={selectedPanel === panels[2] ? "blue" : "grey"} />
-                <Text style={[styles.caption, { color: selectedPanel === panels[2] ? "blue" : "grey" }]}>Profil</Text>
+                <FontAwesome5 name="user" size={24} color={selectedPanel === panels[2] ? "#007AFF" : "grey"} />
+                <Text style={[styles.caption, { color: selectedPanel === panels[2] ? "#007AFF" : "grey" }]}>Profil</Text>
             </TouchableOpacity>
         </View>
     );
