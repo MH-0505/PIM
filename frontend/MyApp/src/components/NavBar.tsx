@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import FontAwesome5 from '@react-native-vector-icons/fontawesome5';
 
+// @ts-ignore
 const NavBar = ({ selectedPanel, setSelectedPanel }) => {
     const panels = ['chat', 'contacts', 'profile'];
 
