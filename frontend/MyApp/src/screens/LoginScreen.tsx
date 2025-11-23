@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
-
-const API_URL = "http://192.168.0.32:8000/api";
+import { API_URL } from "@env";
 
 const LoginScreen = ({ navigation }: any) => {
     const [username, setUsername] = useState('');
@@ -48,6 +46,7 @@ const LoginScreen = ({ navigation }: any) => {
 
         } catch (error) {
             Alert.alert("Error", "Cannot connect to backend");
+            console.log(error);
         }
 
         setLoading(false);

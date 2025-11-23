@@ -11,14 +11,13 @@ import {
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from "@react-navigation/native";
-
-const API_URL = "http://192.168.0.32:8000/api";
+import { API_URL } from "@env";
 
 type Message = {
     id: string;
     sender_id: string;
     content: string;
-    sent_at: string;
+    sent_at: string;w
 };
 
 const ChatScreen = ({ route }: any) => {

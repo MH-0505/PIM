@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
-
-const API_URL = "http://192.168.0.32:8000/api";
+import { API_URL } from "@env";
 
 const RegisterScreen = ({ navigation }: any) => {
     const [email, setEmail] = useState('');
@@ -42,6 +41,7 @@ const RegisterScreen = ({ navigation }: any) => {
 
         } catch (error) {
             Alert.alert("Błąd", "Nie udało się połączyć z serwerem.");
+            console.log(error);
         }
 
         setLoading(false);

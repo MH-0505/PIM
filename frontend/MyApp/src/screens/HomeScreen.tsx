@@ -4,8 +4,7 @@ import NavBar from '../components/NavBar';
 import AddContactForm from '../components/AddContactForm';
 import {Plus, MessageCircle} from 'lucide-react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
-const API_URL = 'http://192.168.0.32:8000/api';
+import { API_URL } from "@env";
 
 //PANELE
 
