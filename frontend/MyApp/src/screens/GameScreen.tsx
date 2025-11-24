@@ -1,4 +1,9 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import FontAwesome5 from '@react-native-vector-icons/fontawesome5';
+import FontAwesome6 from '@react-native-vector-icons/fontawesome6/brand';
+import AntDesign from '@react-native-vector-icons/ant-design';
+
+
 import {
     View,
     Text,
@@ -188,25 +193,61 @@ const GameScreen = ({ route }: any) => {
                 disabled={value !== "EMPTY" || game.is_finished}
             >
                 <Text style={styles.cellText}>
-                    {value === "EMPTY" ? "" : value}
+                    {value === "EMPTY" ? "" : value === "X" ?
+                        <AntDesign name="close" size={64} color="red" />
+                        : value === "O" ?
+                        <FontAwesome5 name="circle" size={64} color="blue" />
+                        :
+                        ""}
                 </Text>
             </TouchableOpacity>
         );
     };
 
-    return (
-        <View style={styles.container}>
+    const turnInfoStyle = () => {
+        if (!game) return {};
 
-            <Text style={styles.turnText}>
-                {game.is_finished
-                    ? game.winner
-                        ? `Winner: ${game.winner}`
-                        : "Draw!"
-                    : currentUserId === game.current_turn
-                        ? "Your turn"
-                        : "Opponent's turn"
-                }
-            </Text>
+        const { current_turn, player_1: p1Id, player_2: p2Id, player_1_symbol: p1Sym, player_2_symbol: p2Sym } = game;
+
+        let symbol;
+
+        if (current_turn === p1Id) {
+            symbol = p1Sym;
+        } else if (current_turn === p2Id) {
+            symbol = p2Sym;
+        } else {
+            if (currentUserId === p1Id) {
+                symbol = p1Sym;
+            } else if (currentUserId === p2Id) {
+                symbol = p2Sym;
+            } else {
+                symbol = "X";
+            }
+        }
+
+        return {
+            backgroundColor: symbol === "X" ? "#FF5D5D" : "#5D5DFF"
+        };
+    };
+
+    return (
+        <View style={[styles.container]}>
+            <View style={{width: "100%", paddingLeft: 48, display: "flex"}}>
+                <View style={[styles.turnTextContainer, turnInfoStyle()]}>
+                    <Text style={styles.turnText}>
+                        {game.is_finished
+                            ? game.winner
+                                ? `Winner: ${game.winner}`
+                                : "Draw!"
+                            : currentUserId === game.current_turn
+                                ? "Your turn"
+                                : "Opponent's turn"
+                        }
+                    </Text>
+                </View>
+            </View>
+
+
 
             <View style={styles.board}>
                 <View style={styles.row}>
@@ -258,18 +299,19 @@ const styles = StyleSheet.create({
         fontSize: 18,
         color: "#555"
     },
-    turnText: {
-        fontSize: 22,
-        fontWeight: "600",
+    turnTextContainer: {
+        backgroundColor: "#FF5D5D",
+        padding: 10,
+        borderRadius: 8,
         marginBottom: 20,
-        color: "#333"
+        alignSelf: "flex-start"
+    },
+    turnText: {
+        fontSize: 16,
+        fontWeight: "600",
+        color: "#fff",
     },
     board: {
-        width: 300,
-        height: 300,
-        backgroundColor: "#fff",
-        borderWidth: 3,
-        borderColor: "#333",
         justifyContent: "center"
     },
     row: {
@@ -279,14 +321,16 @@ const styles = StyleSheet.create({
         width: 100,
         height: 100,
         borderWidth: 1,
+        margin: 4,
         borderColor: "#999",
+        borderRadius: 12,
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
+        backgroundColor: "#fff"
     },
     cellText: {
         fontSize: 40,
-        fontWeight: "bold",
-        color: "#333"
+        fontWeight: "bold"
     },
     restartButton: {
         marginTop: 25,
