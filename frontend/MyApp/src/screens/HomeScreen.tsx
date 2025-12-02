@@ -2,7 +2,8 @@ import React, {useState, useEffect} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity, Alert} from 'react-native';
 import NavBar from '../components/NavBar';
 import AddContactForm from '../components/AddContactForm';
-import {Plus, MessageCircle} from 'lucide-react-native';
+import ConfirmLogout from '../components/ConfirmLogout';
+import {Plus, MessageCircle, DoorOpen, UserRoundCog} from 'lucide-react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { API_URL } from "@env";
 
@@ -10,10 +11,10 @@ import { API_URL } from "@env";
 
 const ChatPanel = ({chats, navigation}: any) => (
   <View style={styles.panel}>
-    <Text style={styles.title}>Your Chats</Text>
+    <Text style={styles.title}>Twoje Czaty</Text>
 
     {chats.length === 0 ? (
-      <Text style={styles.empty}>No chats yet.</Text>
+      <Text style={styles.empty}>Nie masz jeszcze żadnych czatów.</Text>
     ) : (
       chats.map((chat: any) => (
         <TouchableOpacity
@@ -35,10 +36,10 @@ const ChatPanel = ({chats, navigation}: any) => (
 
 const ContactsPanel = ({contacts, onStartChat}: any) => (
   <View style={styles.panel}>
-    <Text style={styles.title}>Contacts</Text>
+    <Text style={styles.title}>Kontakty</Text>
 
     {contacts.length === 0 ? (
-      <Text style={styles.empty}>No contacts yet.</Text>
+      <Text style={styles.empty}>Nie masz jeszcze żadnych kontaktów.</Text>
     ) : (
       contacts.map((c: any) => (
         <View key={c.id} style={styles.contactItem}>
@@ -55,9 +56,14 @@ const ContactsPanel = ({contacts, onStartChat}: any) => (
   </View>
 );
 
-const ProfilePanel = () => (
-  <View style={styles.panel}>
-    <Text style={styles.title}>Profile Panel</Text>
+const ProfilePanel = ({ onLogout }) => (
+  <View style={styles.userPanel}>
+    <UserRoundCog style={styles.userIcon} size={150} color="#666" />
+    <Text style={styles.title}>Panel Profilu</Text>
+    <TouchableOpacity style={styles.logOutButton} onPress={onLogout}>
+      <Text style={styles.contactEmail}>Wyloguj się</Text>
+      <DoorOpen size={22} color="#333" />
+    </TouchableOpacity>
   </View>
 );
 
@@ -69,6 +75,8 @@ const HomeScreen = ({navigation}: any) => {
 
   const [contacts, setContacts] = useState([]);
   const [chats, setChats] = useState([]);
+
+  const [logoutVisible, setLogoutVisible] = useState(false);
 
   const loadContacts = async () => {
     try {
@@ -87,6 +95,17 @@ const HomeScreen = ({navigation}: any) => {
       console.log('Connection error loading contacts.');
     }
   };
+
+  const logout = async () => {
+    try {
+      await AsyncStorage.removeItem('token');
+      await AsyncStorage.removeItem('user_id');
+      navigation.replace('Login');
+    } catch (e) {
+      console.error('Error during logout:', e);
+    }
+  };
+
 
   const loadChats = async () => {
     try {
@@ -206,7 +225,7 @@ const HomeScreen = ({navigation}: any) => {
         );
 
       case 'profile':
-        return <ProfilePanel />;
+        return <ProfilePanel onLogout={() => setLogoutVisible(true)} />;
     }
   };
 
@@ -218,6 +237,15 @@ const HomeScreen = ({navigation}: any) => {
         visible={modalVisible}
         onAdd={handleAddContact}
         onCancel={() => setModalVisible(false)}
+      />
+
+      <ConfirmLogout
+        visible={logoutVisible}
+        onCancel={() => setLogoutVisible(false)}
+        onConfirm={async () => {
+          setLogoutVisible(false);
+          await logout();
+        }}
       />
 
       <View style={styles.navBarContainer}>
@@ -238,6 +266,36 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     width: '100%',
+  },
+
+  userPanel: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    marginTop: '-30%',
+  },
+
+  userIcon: {
+    marginBottom: '5%',
+  },
+
+  logOutButton: {
+    width: '90%',
+    padding: 12,
+    marginVertical: 6,
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    elevation: 2,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+
+  logOutButton2: {padding: 6},
+
+  LogOutIcon: {
+    alignSelf:'flex-end',
   },
 
   title: {fontSize: 24, fontWeight: 'bold', marginBottom: 20},
