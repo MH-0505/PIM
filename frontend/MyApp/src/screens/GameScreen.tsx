@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import FontAwesome5 from '@react-native-vector-icons/fontawesome5';
-import FontAwesome6 from '@react-native-vector-icons/fontawesome6/brand';
+import FontAwesome6 from '@react-native-vector-icons/fontawesome6';
 import AntDesign from '@react-native-vector-icons/ant-design';
 
 
@@ -100,7 +100,7 @@ const GameScreen = ({ route }: any) => {
         if (game.is_finished) return;
 
         if (game.current_turn !== currentUserId) {
-            Alert.alert("Not your turn!");
+            Alert.alert("Nie twoja tura!");
             return;
         }
 
@@ -130,9 +130,9 @@ const GameScreen = ({ route }: any) => {
             fetchGame();
 
             if (data.status === "WIN") {
-                Alert.alert("Game Over", "Winner: " + data.winner);
+                Alert.alert("Gra zakończona", "Zwycięzca: " + data.winner);
             } else if (data.status === "DRAW") {
-                Alert.alert("Draw!", "Nobody wins.");
+                Alert.alert("Remis!", "Nie ma zwycięzcy.");
             }
 
         } catch {
@@ -237,11 +237,11 @@ const GameScreen = ({ route }: any) => {
                     <Text style={styles.turnText}>
                         {game.is_finished
                             ? game.winner
-                                ? `Winner: ${game.winner}`
-                                : "Draw!"
+                                ? `Zwycięzca: ${game.winner}`
+                                : "Remis!"
                             : currentUserId === game.current_turn
-                                ? "Your turn"
-                                : "Opponent's turn"
+                                ? "Twoja tura"
+                                : "Tura przeciwnika"
                         }
                     </Text>
                 </View>

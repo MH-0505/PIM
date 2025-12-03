@@ -12,6 +12,7 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from "@react-navigation/native";
 import { API_URL } from "@env";
+import {Gamepad2, SendHorizontal} from 'lucide-react-native';
 
 type Message = {
     id: string;
@@ -50,13 +51,14 @@ const ChatScreen = ({ route }: any) => {
         navigation.setOptions({
             headerRight: () => (
                 <TouchableOpacity
-                    style={{ marginRight: 10 }}
+                    style={{ marginRight: 10, flexDirection: 'row' }}
                     onPress={() => navigation.navigate("GameScreen" as never, {
                         player1Id: currentUserId,
                         player2Id: route.params.otherUserId
                     } as never)}
                 >
-                    <Text style={{ color: "#007AFF", fontSize: 16 }}>Game</Text>
+                    <Gamepad2 style={{marginRight: 10}} size="22" color="#007AFF"/>
+                    <Text style={{ color: "#007AFF", fontSize: 16 }}>Graj</Text>
                 </TouchableOpacity>
             )
         });
@@ -132,6 +134,11 @@ const ChatScreen = ({ route }: any) => {
     const renderMessage = ({ item }: { item: Message }) => {
         const isMe = item.sender_id === currentUserId;
 
+        const date = new Date(item.sent_at);
+        const hours = date.getHours()+1;
+        const minutes = date.getMinutes();
+        const time = `${hours}:${minutes.toString().padStart(2, '0')}`;
+
         return (
             <View
                 style={[
@@ -139,9 +146,20 @@ const ChatScreen = ({ route }: any) => {
                     isMe ? styles.myMessage : styles.theirMessage
                 ]}
             >
-                <Text style={styles.messageText}>{item.content}</Text>
-                <Text style={styles.timeText}>
-                    {new Date(item.sent_at).toLocaleTimeString().slice(0, 5)}
+                <Text
+                    style={[
+                    styles.messageText,
+                    isMe ? styles.myMessageText : styles.theirMessageText,
+                    ]}
+                >
+                    {item.content}</Text>
+                <Text
+                    style={[
+                    styles.timeText,
+                    isMe ? styles.myTimeText : styles.theirTimeText,
+                    ]}
+                >
+                    {time}
                 </Text>
             </View>
         );
@@ -154,9 +172,6 @@ const ChatScreen = ({ route }: any) => {
             behavior={Platform.OS === "ios" ? "padding" : undefined}
             keyboardVerticalOffset={90}
         >
-            <View style={styles.header}>
-                <Text style={styles.headerText}>{otherUserEmail}</Text>
-            </View>
 
             <FlatList
                 ref={flatListRef}
@@ -176,7 +191,7 @@ const ChatScreen = ({ route }: any) => {
                     placeholderTextColor="#999"
                 />
                 <TouchableOpacity style={styles.sendButton} onPress={sendMessage}>
-                    <Text style={styles.sendText}>Send</Text>
+                    <Text style={styles.sendText}>Wyślij</Text>
                 </TouchableOpacity>
             </View>
         </KeyboardAvoidingView>
@@ -227,8 +242,28 @@ const styles = StyleSheet.create({
         color: "#fff",
         fontSize: 16
     },
+    myMessageText: {
+        color: "#fff",
+        fontSize: 16
+    },
+    theirMessageText: {
+        color: "#333",
+        fontSize: 16
+    },
     timeText: {
         color: "#ddd",
+        fontSize: 12,
+        marginTop: 4,
+        textAlign: "right"
+    },
+    myTimeText: {
+        color: "#ddd",
+        fontSize: 12,
+        marginTop: 4,
+        textAlign: "right"
+    },
+    theirTimeText: {
+        color: "#666",
         fontSize: 12,
         marginTop: 4,
         textAlign: "right"
@@ -259,7 +294,8 @@ const styles = StyleSheet.create({
         paddingVertical: 12,
         paddingHorizontal: 18,
         borderRadius: 10,
-        justifyContent: "center"
+        justifyContent: "center",
+        flexDirection: "row",
     },
     sendText: {
         color: "#fff",
