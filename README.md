@@ -10,7 +10,8 @@ Aplikacja mobilna czatowania z obsługą prostych gier, zbudowana przy użyciu R
 *   Podstawowy panel profilu użytkownika.
 
 ## Mockupy widoków
-<img alt="mockup1" src="https://github.com/MH-0505/PIM/blob/main/mockupy/1.log_in.jpg?raw=true" width="240"/> <img alt="mockup2" src="https://github.com/MH-0505/PIM/blob/main/mockupy/5.chat.jpg?raw=true" width="240"/> <img alt="mockup3" src="https://github.com/MH-0505/PIM/blob/main/mockupy/3.contacts.jpg?raw=true" width="240"/> <img alt="mockup4" src="https://github.com/MH-0505/PIM/blob/main/mockupy/6.game.jpg?raw=true" width="240"/>
+<img alt="mockup1" src="https://github.com/MH-0505/PIM/blob/main/mockupy/1.log_in.jpg?raw=true" width="320"/> <img alt="mockup2" src="https://github.com/MH-0505/PIM/blob/main/mockupy/5.chat.jpg?raw=true" width="320"/> 
+<img alt="mockup3" src="https://github.com/MH-0505/PIM/blob/main/mockupy/3.contacts.jpg?raw=true" width="320"/> <img alt="mockup4" src="https://github.com/MH-0505/PIM/blob/main/mockupy/6.game.jpg?raw=true" width="320"/>
 
 
 
