@@ -64,7 +64,7 @@ export default function App() {
                 <Stack.Screen
                     name="GameScreen"
                     component={GameScreen}
-                    options={{ title: "Game" }}
+                    options={{ title: "Kółko i krzyżyk" }}
                 />
 
 

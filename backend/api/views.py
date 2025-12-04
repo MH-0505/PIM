@@ -506,7 +506,7 @@ def get_game(request):
         "player_2_symbol": game.player_2_symbol,
         "current_turn": str(game.current_turn.id),
         "is_finished": game.is_finished,
-        "winner": str(game.winner.id) if game.winner else None,
+        "winner": str(game.winner.email) if game.winner else None,
         "board": fields
     })
 
@@ -591,7 +591,8 @@ def make_move(request):
         return Response({
             "status": "WIN",
             "winner": winner_symbol,
-            "winner_user_id": str(game.winner.id)
+            "winner_user_id": str(game.winner.id),
+            "winner_email": str(game.winner.email)
         })
 
     elif winner_symbol == "DRAW":
