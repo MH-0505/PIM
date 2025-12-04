@@ -9,6 +9,13 @@ Aplikacja mobilna czatowania z obsługą prostych gier, zbudowana przy użyciu R
 *   Obsługa prostej gry typu kółko i krzyżyk.
 *   Podstawowy panel profilu użytkownika.
 
+## Mockupy widoków
+![mockup1](https://github.com/MH-0505/PIM/blob/main/mockupy/1.log_in.jpg?raw=true)
+![mockup2](https://github.com/MH-0505/PIM/blob/main/mockupy/5.chat.jpg?raw=true)
+![mockup3](https://github.com/MH-0505/PIM/blob/main/mockupy/3.contacts.jpg?raw=true)
+![mockup4](https://github.com/MH-0505/PIM/blob/main/mockupy/6.game.jpg?raw=true)
+
+
 ## Wykorzystane technologie
 
 **Frontend:**
@@ -21,6 +28,9 @@ Aplikacja mobilna czatowania z obsługą prostych gier, zbudowana przy użyciu R
 *   Django
 *   Django REST Framework
 *   PostgreSQL
+
+## Schemat architektury aplikacji
+![diagram C4 aplikacji](https://github.com/MH-0505/PIM/blob/main/diagram.png?raw=true)
 
 
 ## Uruchomienie Projektu
